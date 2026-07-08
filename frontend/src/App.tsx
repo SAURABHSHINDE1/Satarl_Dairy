@@ -12,6 +12,7 @@ import ActivityLogsPage from './pages/ActivityLogsPage';
 import SettingsPage from './pages/SettingsPage';
 import FinalProductStoragePage from './pages/FinalProductStoragePage';
 import FinalBiProductReportPage from './pages/FinalBiProductReportPage';
+import RawBulkMilkTestingPage from './pages/RawBulkMilkTestingPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { useUIStore } from './store/ui.store';
 
@@ -74,6 +75,7 @@ function App() {
             <Route path="tank-records" element={<TankRecordsPage />} />
             <Route path="final-product-storage" element={<FinalProductStoragePage />} />
             <Route path="final-bi-product" element={<FinalBiProductReportPage />} />
+            <Route path="raw-bulk-milk" element={<RawBulkMilkTestingPage />} />
             <Route path="reports" element={<ReportsPage />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="activity-logs" element={<ActivityLogsPage />} />

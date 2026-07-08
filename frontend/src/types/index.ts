@@ -205,3 +205,48 @@ export interface BiProductFormData {
   chemist_name?: string;
   quality_incharge_name?: string;
 }
+
+export interface RawBulkMilkRecord {
+  id: number;
+  date: string;
+  testing_time?: string;
+  sample_name: string;
+  type_of_milk: string;
+  milk_quantity_lit?: number;
+  temp_celsius?: number;
+  ot?: number;
+  acidity_percent?: number;
+  alcohol_result?: string;
+  fat_percent?: number;
+  clr?: number;
+  snf?: number;
+  protein_percent?: number | null;
+  sodium_electrolyte_condition?: string | null;
+  ph?: number;
+  chemist_name?: string;
+  quality_incharge_name?: string;
+  created_by?: number;
+  created_by_name?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RawBulkMilkFormData {
+  date: string;
+  testing_time?: string;
+  sample_name: string;
+  type_of_milk: string;
+  milk_quantity_lit?: number;
+  temp_celsius?: number;
+  ot?: number;
+  acidity_percent?: number;
+  alcohol_result?: string;
+  fat_percent?: number;
+  clr?: number;
+  snf?: number;
+  protein_percent?: number | null;
+  sodium_electrolyte_condition?: string | null;
+  ph?: number;
+  chemist_name?: string;
+  quality_incharge_name?: string;
+}

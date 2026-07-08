@@ -12,6 +12,7 @@ import {
   Milk,
   Beaker,
   ClipboardList,
+  Droplets,
 } from 'lucide-react';
 import { useUIStore } from '../store/ui.store';
 import { useAuthStore } from '../store/auth.store';
@@ -22,6 +23,7 @@ const menuItems = [
   { path: '/tank-records', label: 'Tank Records', icon: FlaskConical },
   { path: '/final-product-storage', label: 'Final Product Storage', icon: Beaker },
   { path: '/final-bi-product', label: 'Final Bi-Product Report', icon: ClipboardList },
+  { path: '/raw-bulk-milk', label: 'Raw Bulk Milk Testing', icon: Droplets },
   { path: '/reports', label: 'Reports', icon: FileText },
   { path: '/users', label: 'Users', icon: Users, roles: ['admin'] },
   { path: '/activity-logs', label: 'Activity Logs', icon: Activity, roles: ['admin'] },

@@ -9,6 +9,7 @@ const activityRoutes = require('./activity.routes');
 const settingsRoutes = require('./settings.routes');
 const finalProductRoutes = require('./finalProduct.routes');
 const biProductRoutes = require('./biProduct.routes');
+const rawBulkMilkRoutes = require('./rawBulkMilk.routes');
 
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
@@ -18,6 +19,7 @@ router.use('/activities', activityRoutes);
 router.use('/settings', settingsRoutes);
 router.use('/final-product-records', finalProductRoutes);
 router.use('/bi-product-reports', biProductRoutes);
+router.use('/raw-bulk-milk-records', rawBulkMilkRoutes);
 
 
 router.get('/health', (req, res) => {
