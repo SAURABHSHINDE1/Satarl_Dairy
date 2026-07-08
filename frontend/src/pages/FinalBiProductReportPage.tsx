@@ -652,7 +652,7 @@ export default function FinalBiProductReportPage() {
                 </div>
                 <button onClick={() => setViewRecord(null)} className="p-2 rounded-lg hover:bg-secondary-100 text-text-secondary">✕</button>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm max-h-[60vh] overflow-y-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm max-h-[60vh] overflow-y-auto">
                 {[
                   ['Date', formatDate(viewRecord.date)],
                   ['Batch No.', viewRecord.batch_no],

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Plus, Save, Trash2, Eye, Edit2, RefreshCw, Download,
@@ -10,7 +10,6 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
-import { Badge } from '../components/ui/Badge';
 import { finalProductService } from '../services/finalProduct.service';
 import type { FinalProductRecord, FinalProductFormData } from '../types';
 import { formatDate } from '../lib/utils';
@@ -250,7 +249,7 @@ export default function FinalProductStoragePage() {
   return (
     <div className="space-y-6">
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold text-text-primary flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -605,7 +604,7 @@ export default function FinalProductStoragePage() {
                   className="p-2 rounded-lg hover:bg-secondary-100 text-text-secondary transition-colors"
                 >✕</button>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm max-h-[65vh] overflow-y-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm max-h-[65vh] overflow-y-auto">
                 {[
                   ['Date', formatDate(viewRecord.date)],
                   ['Shift', viewRecord.shift],

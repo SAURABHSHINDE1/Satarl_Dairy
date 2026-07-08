@@ -94,7 +94,7 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold text-text-primary">Users</h1>
           <p className="text-text-secondary mt-1">Manage system users and permissions</p>

@@ -1172,3 +1172,85 @@
 {"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 14:36:21"}
 {"level":"info","message":"Environment: development","timestamp":"2026-07-08 14:36:21"}
 {"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 14:36:21"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 14:36:38"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 14:36:38"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 14:36:38"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:36:58"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 14:36:58"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:37:58"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 14:38:10"}
+{"level":"info","message":"GET /api/reports/daily?date=2026-07-08","timestamp":"2026-07-08 14:38:23"}
+{"level":"info","message":"GET /api/users","timestamp":"2026-07-08 14:38:41"}
+{"level":"info","message":"GET /api/activities?limit=200","timestamp":"2026-07-08 14:38:44"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 14:38:47"}
+{"level":"info","message":"GET /api/activities?limit=200","timestamp":"2026-07-08 14:38:51"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 14:38:52"}
+{"level":"info","message":"GET /api/activities?limit=200","timestamp":"2026-07-08 14:38:55"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 14:38:56"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:38:58"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:39:00"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:39:00"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:39:58"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:40:19"}
+{"level":"info","message":"DELETE /api/tank-records/87","timestamp":"2026-07-08 14:40:26"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:40:26"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:40:28"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:40:28"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:40:35"}
+{"level":"info","message":"DELETE /api/tank-records/101","timestamp":"2026-07-08 14:40:40"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:40:40"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:40:42"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:40:42"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:40:48"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:40:58"}
+{"level":"info","message":"GET /api/tank-records?status=approved&limit=10&offset=0","timestamp":"2026-07-08 14:41:12"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:41:19"}
+{"level":"info","message":"GET /api/tank-records?limit=50&offset=0","timestamp":"2026-07-08 14:41:23"}
+{"level":"info","message":"DELETE /api/tank-records/81","timestamp":"2026-07-08 14:41:44"}
+{"level":"info","message":"GET /api/tank-records?limit=50&offset=0","timestamp":"2026-07-08 14:41:44"}
+{"level":"info","message":"DELETE /api/tank-records/90","timestamp":"2026-07-08 14:41:50"}
+{"level":"info","message":"GET /api/tank-records?limit=50&offset=0","timestamp":"2026-07-08 14:41:50"}
+{"level":"info","message":"DELETE /api/tank-records/75","timestamp":"2026-07-08 14:41:58"}
+{"level":"info","message":"GET /api/tank-records?limit=50&offset=0","timestamp":"2026-07-08 14:41:58"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:41:58"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:42:00"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:42:00"}
+{"level":"info","message":"GET /api/raw-bulk-milk-records?date=2026-07-08","timestamp":"2026-07-08 14:42:26"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:42:58"}
+{"level":"info","message":"POST /api/raw-bulk-milk-records","timestamp":"2026-07-08 14:43:54"}
+{"level":"info","message":"GET /api/raw-bulk-milk-records?date=2026-07-08","timestamp":"2026-07-08 14:43:54"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:43:58"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 14:44:08"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 14:44:21"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:49:14"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 14:49:14"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:49:28"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:49:32"}
+{"expiredAt":"2026-07-08T07:35:33.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 14:49:32"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:49:33"}
+{"expiredAt":"2026-07-08T07:35:33.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:49:33"}
+{"expiredAt":"2026-07-08T07:35:33.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:49:33"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:50:00"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:50:00"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:50:00"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 14:50:22"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:50:39"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:50:39"}
+{"level":"info","message":"GET /api/users","timestamp":"2026-07-08 14:50:49"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:51:00"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:51:15"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:51:15"}
+{"level":"info","message":"GET /api/activities?limit=200","timestamp":"2026-07-08 14:51:17"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 14:51:31"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:51:31"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:51:31"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 14:51:37"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:51:52"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 14:51:52"}

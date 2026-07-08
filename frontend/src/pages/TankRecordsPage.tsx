@@ -216,7 +216,7 @@ export default function TankRecordsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold text-text-primary">Tank Records</h1>
           <p className="text-text-secondary mt-1">Manage milk tank release records</p>
@@ -454,7 +454,7 @@ export default function TankRecordsPage() {
               </button>
             </div>
               <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-text-secondary">Date</p>
                   <p className="font-medium text-text-primary">{formatDate(selectedRecord.date)}</p>
