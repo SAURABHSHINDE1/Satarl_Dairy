@@ -187,3 +187,65 @@ SELECT
     SUM(milk_quantity) as total_quantity
 FROM tank_records
 GROUP BY status;
+
+-- Final Product Storage Records Table
+CREATE TABLE IF NOT EXISTS final_product_storage_records (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    shift ENUM('morning', 'evening', 'night') NOT NULL,
+    testing_time TIME,
+    tank_no VARCHAR(20) NOT NULL,
+    type_of_milk ENUM('cow', 'buffalo', 'mixed') NOT NULL DEFAULT 'cow',
+    milk_quantity_l DECIMAL(10, 2),
+    temp_celsius DECIMAL(5, 2),
+    flavour_taste VARCHAR(100),
+    acidity_percent DECIMAL(5, 3),
+    alcohol_result VARCHAR(50),
+    fat_percent DECIMAL(5, 2),
+    clr DECIMAL(6, 3),
+    snf_percent DECIMAL(5, 2),
+    efficiency_percent DECIMAL(5, 2) NULL,
+    protein_percent DECIMAL(5, 2),
+    electrolyte_condition VARCHAR(100),
+    remark TEXT,
+    chemist_name VARCHAR(100),
+    quality_incharge_name VARCHAR(100),
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+    INDEX idx_date (date),
+    INDEX idx_shift (shift),
+    INDEX idx_tank_no (tank_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Bi-Product Reports Table
+CREATE TABLE IF NOT EXISTS bi_product_reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    batch_no VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    product_name VARCHAR(100) NOT NULL,
+    body_structure VARCHAR(100),
+    sensory VARCHAR(100),
+    taste VARCHAR(100),
+    temp_celsius DECIMAL(5, 2),
+    acidity_percent DECIMAL(5, 3),
+    ph DECIMAL(4, 2),
+    self_life VARCHAR(50),
+    fdm DECIMAL(5, 2) NULL,
+    fat_percent DECIMAL(5, 2) NULL,
+    ts DECIMAL(5, 2) NULL,
+    lassi_viscosity DECIMAL(8, 2) NULL,
+    moisture DECIMAL(5, 2) NULL,
+    chemist_name VARCHAR(100),
+    quality_incharge_name VARCHAR(100),
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+    INDEX idx_date (date),
+    INDEX idx_product_name (product_name),
+    INDEX idx_batch_no (batch_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+

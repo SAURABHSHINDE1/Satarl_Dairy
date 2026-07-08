@@ -10,6 +10,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Milk,
+  Beaker,
+  ClipboardList,
 } from 'lucide-react';
 import { useUIStore } from '../store/ui.store';
 import { useAuthStore } from '../store/auth.store';
@@ -18,6 +20,8 @@ import { cn } from '../lib/utils';
 const menuItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/tank-records', label: 'Tank Records', icon: FlaskConical },
+  { path: '/final-product-storage', label: 'Final Product Storage', icon: Beaker },
+  { path: '/final-bi-product', label: 'Final Bi-Product Report', icon: ClipboardList },
   { path: '/reports', label: 'Reports', icon: FileText },
   { path: '/users', label: 'Users', icon: Users, roles: ['admin'] },
   { path: '/activity-logs', label: 'Activity Logs', icon: Activity, roles: ['admin'] },

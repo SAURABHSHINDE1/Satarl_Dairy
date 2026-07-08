@@ -10,6 +10,8 @@ import ReportsPage from './pages/ReportsPage';
 import UsersPage from './pages/UsersPage';
 import ActivityLogsPage from './pages/ActivityLogsPage';
 import SettingsPage from './pages/SettingsPage';
+import FinalProductStoragePage from './pages/FinalProductStoragePage';
+import FinalBiProductReportPage from './pages/FinalBiProductReportPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { useUIStore } from './store/ui.store';
 
@@ -70,6 +72,8 @@ function App() {
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="tank-records" element={<TankRecordsPage />} />
+            <Route path="final-product-storage" element={<FinalProductStoragePage />} />
+            <Route path="final-bi-product" element={<FinalBiProductReportPage />} />
             <Route path="reports" element={<ReportsPage />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="activity-logs" element={<ActivityLogsPage />} />

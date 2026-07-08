@@ -987,3 +987,154 @@
 {"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:16:38"}
 {"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:16:38"}
 {"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:16:38"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:16:57"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:16:57"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:16:57"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:17:12"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:18:39"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:18:54"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:19:12"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:20:12"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:21:12"}
+{"level":"info","message":"POST /api/tank-records","timestamp":"2026-07-08 11:21:27"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:21:27"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 11:22:09"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 11:22:09"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:22:12"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 11:22:29"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:24:25"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 11:24:25"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:33:08"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:33:08"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:33:08"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:33:23"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:33:23"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:33:23"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:33:34"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:33:34"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:33:34"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:33:52"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:33:52"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:33:52"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:34:04"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:34:04"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:34:04"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:34:17"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:34:17"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:34:17"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:34:35"}
+{"expiredAt":"2026-07-08T05:59:25.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 11:34:35"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 11:34:35"}
+{"expiredAt":"2026-07-08T05:59:25.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 11:34:35"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 11:34:35"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 11:34:35"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:34:36"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 11:34:36"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 11:35:43"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 11:35:43"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:35:45"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:36:36"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:37:01"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:37:36"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:38:09"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:38:14"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:38:36"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:39:36"}
+{"level":"info","message":"POST /api/final-product-records","timestamp":"2026-07-08 11:39:52"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:39:52"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:40:22"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:41:36"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:42:36"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:44:43"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:44:43"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:44:43"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:44:57"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:44:57"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:44:57"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:45:10"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:45:10"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:45:10"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:45:26"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:45:26"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:45:26"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:45:37"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:45:37"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:45:37"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 11:45:53"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 11:45:53"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 11:45:53"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:46:22"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:46:22"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:47:47"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:47:47"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:48:07"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:48:09"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:48:12"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:48:14"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:48:47"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 11:51:31"}
+{"expiredAt":"2026-07-08T06:19:35.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 11:51:31"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 11:51:31"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 11:51:31"}
+{"level":"info","message":"POST /api/auth/logout","timestamp":"2026-07-08 11:51:44"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2026-07-08 11:51:51"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:51:52"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 11:51:52"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 11:51:52"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 11:51:54"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:55:27"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 11:55:28"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 11:55:30"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:55:31"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 11:55:32"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:55:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:56:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:57:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:58:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 11:59:52"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 11:59:53"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 11:59:58"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:00:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:01:52"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:02:01"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:02:10"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:02:21"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:02:44"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 12:04:12"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 12:04:12"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 12:04:12"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2026-07-08 12:04:20"}
+{"level":"info","message":"Environment: development","timestamp":"2026-07-08 12:04:20"}
+{"level":"info","message":"Database connected successfully","timestamp":"2026-07-08 12:04:20"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:44:52"}
+{"expiredAt":"2026-07-08T06:36:51.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at module.exports [as verify] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at verifyAccessToken (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\config\\jwt.config.js:21:14)\n    at authenticate (C:\\Users\\USER\\Desktop\\Satral web\\backend\\src\\middlewares\\auth.middleware.js:17:21)\n    at Layer.handle [as handle_request] (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at trim_prefix (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:328:13)\n    at C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:286:9\n    at Function.process_params (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (C:\\Users\\USER\\Desktop\\Satral web\\backend\\node_modules\\express\\lib\\router\\index.js:280:10)","timestamp":"2026-07-08 12:44:52"}
+{"level":"info","message":"POST /api/auth/refresh","timestamp":"2026-07-08 12:44:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:44:53"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:44:54"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:45:08"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:45:53"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:46:53"}
+{"level":"info","message":"POST /api/bi-product-reports","timestamp":"2026-07-08 12:47:27"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 12:47:27"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08&product_name=Dahi","timestamp":"2026-07-08 12:47:37"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08&product_name=Dahi","timestamp":"2026-07-08 12:47:41"}
+{"level":"info","message":"GET /api/bi-product-reports","timestamp":"2026-07-08 12:47:42"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 12:47:45"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 12:47:47"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 12:47:51"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 12:47:52"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:47:53"}
+{"level":"info","message":"GET /api/users","timestamp":"2026-07-08 12:47:54"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2026-07-08 12:50:33"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:50:33"}
+{"level":"info","message":"GET /api/tank-records/statistics?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 12:50:33"}
+{"level":"info","message":"GET /api/tank-records/daily-trend?date_from=Jun+8,+2026&date_to=Jul+8,+2026","timestamp":"2026-07-08 12:50:33"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 12:50:44"}
+{"level":"info","message":"GET /api/activities?limit=8","timestamp":"2026-07-08 12:51:10"}
+{"level":"info","message":"GET /api/users","timestamp":"2026-07-08 12:51:10"}
+{"level":"info","message":"GET /api/final-product-records?date=2026-07-08","timestamp":"2026-07-08 12:51:13"}
+{"level":"info","message":"GET /api/bi-product-reports?date=2026-07-08","timestamp":"2026-07-08 12:51:14"}
+{"level":"info","message":"GET /api/tank-records?limit=10&offset=0","timestamp":"2026-07-08 12:51:15"}
+{"level":"info","message":"GET /api/users","timestamp":"2026-07-08 12:51:17"}
+{"level":"info","message":"GET /api/activities?limit=200","timestamp":"2026-07-08 12:51:17"}
+{"level":"info","message":"GET /api/settings","timestamp":"2026-07-08 12:51:18"}

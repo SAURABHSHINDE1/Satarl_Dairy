@@ -111,3 +111,97 @@ export interface TankRecordFormData {
   release_time?: string;
   remarks?: string;
 }
+
+export interface FinalProductRecord {
+  id: number;
+  date: string;
+  shift: 'morning' | 'evening' | 'night';
+  testing_time?: string;
+  tank_no: string;
+  type_of_milk: 'cow' | 'buffalo' | 'mixed';
+  milk_quantity_l?: number;
+  temp_celsius?: number;
+  flavour_taste?: string;
+  acidity_percent?: number;
+  alcohol_result?: string;
+  fat_percent?: number;
+  clr?: number;
+  snf_percent?: number;
+  efficiency_percent?: number | null;
+  protein_percent?: number;
+  electrolyte_condition?: string;
+  remark?: string;
+  chemist_name?: string;
+  quality_incharge_name?: string;
+  created_by?: number;
+  created_by_name?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FinalProductFormData {
+  date: string;
+  shift: 'morning' | 'evening' | 'night';
+  testing_time?: string;
+  tank_no: string;
+  type_of_milk: 'cow' | 'buffalo' | 'mixed';
+  milk_quantity_l?: number;
+  temp_celsius?: number;
+  flavour_taste?: string;
+  acidity_percent?: number;
+  alcohol_result?: string;
+  fat_percent?: number;
+  clr?: number;
+  snf_percent?: number;
+  efficiency_percent?: number | null;
+  protein_percent?: number;
+  electrolyte_condition?: string;
+  remark?: string;
+  chemist_name?: string;
+  quality_incharge_name?: string;
+}
+
+export interface BiProductReport {
+  id: number;
+  batch_no: string;
+  date: string;
+  product_name: string;
+  body_structure?: string;
+  sensory?: string;
+  taste?: string;
+  temp_celsius?: number;
+  acidity_percent?: number;
+  ph?: number;
+  self_life?: string;
+  fdm?: number | null;
+  fat_percent?: number | null;
+  ts?: number | null;
+  lassi_viscosity?: number | null;
+  moisture?: number | null;
+  chemist_name?: string;
+  quality_incharge_name?: string;
+  created_by?: number;
+  created_by_name?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BiProductFormData {
+  batch_no: string;
+  date: string;
+  product_name: string;
+  body_structure?: string;
+  sensory?: string;
+  taste?: string;
+  temp_celsius?: number;
+  acidity_percent?: number;
+  ph?: number;
+  self_life?: string;
+  fdm?: number | null;
+  fat_percent?: number | null;
+  ts?: number | null;
+  lassi_viscosity?: number | null;
+  moisture?: number | null;
+  chemist_name?: string;
+  quality_incharge_name?: string;
+}

@@ -7,6 +7,8 @@ const tankRoutes = require('./tank.routes');
 const reportRoutes = require('./report.routes');
 const activityRoutes = require('./activity.routes');
 const settingsRoutes = require('./settings.routes');
+const finalProductRoutes = require('./finalProduct.routes');
+const biProductRoutes = require('./biProduct.routes');
 
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
@@ -14,6 +16,9 @@ router.use('/tank-records', tankRoutes);
 router.use('/reports', reportRoutes);
 router.use('/activities', activityRoutes);
 router.use('/settings', settingsRoutes);
+router.use('/final-product-records', finalProductRoutes);
+router.use('/bi-product-reports', biProductRoutes);
+
 
 router.get('/health', (req, res) => {
   res.json({
