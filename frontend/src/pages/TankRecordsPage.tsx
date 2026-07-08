@@ -141,7 +141,7 @@ export default function TankRecordsPage() {
     };
 
     const csvContent = [
-      ['Date', 'Tank Number', 'Batch Number', 'Quantity (L)', 'FAT %', 'SNF %', 'Temperature', 'Milk Type', 'Status'],
+      ['Date', 'Tank Number', 'Batch Number', 'Quantity (L)', 'FAT %', 'SNF %', 'Temperature', 'Milk Type', 'Sample Time', 'Packing Machine Detail', 'Tank Release Time', 'Status'],
       ...filteredRecords.map((record: TankRecord) => [
         formatDate(record.date),
         record.tank_number,
@@ -151,6 +151,9 @@ export default function TankRecordsPage() {
         record.snf_percentage.toFixed(2),
         record.temperature?.toFixed(1) || 'N/A',
         record.milk_type || 'N/A',
+        record.tank_release_time || 'N/A',
+        record.packing_machine_detail || 'N/A',
+        record.release_time || 'N/A',
         getStatusLabel(record.status),
       ]),
     ]
@@ -450,7 +453,7 @@ export default function TankRecordsPage() {
                 <X className="w-5 h-5 text-text-secondary" />
               </button>
             </div>
-            <div className="space-y-4">
+              <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-text-secondary">Date</p>
@@ -483,6 +486,18 @@ export default function TankRecordsPage() {
                 <div>
                   <p className="text-sm text-text-secondary">Temperature (°C)</p>
                   <p className="font-medium text-text-primary">{selectedRecord.temperature?.toFixed(1) || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-text-secondary">Sample Time</p>
+                  <p className="font-medium text-text-primary">{selectedRecord.tank_release_time || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-text-secondary">Packing Machine Detail</p>
+                  <p className="font-medium text-text-primary">{selectedRecord.packing_machine_detail || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-text-secondary">Tank Release Time (Actual)</p>
+                  <p className="font-medium text-text-primary">{selectedRecord.release_time || 'N/A'}</p>
                 </div>
               </div>
               <div>

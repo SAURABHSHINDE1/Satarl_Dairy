@@ -108,8 +108,9 @@ class TankRepository {
     const [result] = await pool.query(
       `INSERT INTO tank_records 
        (date, tank_number, batch_number, milk_quantity, fat_percentage, snf_percentage, 
-        temperature, milk_type, process_operator_id, lab_incharge_id, tank_release_time, remarks, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        temperature, milk_type, process_operator_id, lab_incharge_id, tank_release_time,
+        packing_machine_detail, release_time, remarks, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         tankData.date,
         tankData.tank_number,
@@ -122,6 +123,8 @@ class TankRepository {
         tankData.process_operator_id,
         tankData.lab_incharge_id || null,
         tankData.tank_release_time || null,
+        tankData.packing_machine_detail || null,
+        tankData.release_time || null,
         tankData.remarks || null,
         tankData.status || 'draft'
       ]
@@ -181,6 +184,16 @@ class TankRepository {
     if (tankData.tank_release_time !== undefined) {
       fields.push('tank_release_time = ?');
       values.push(tankData.tank_release_time);
+    }
+
+    if (tankData.packing_machine_detail !== undefined) {
+      fields.push('packing_machine_detail = ?');
+      values.push(tankData.packing_machine_detail);
+    }
+
+    if (tankData.release_time !== undefined) {
+      fields.push('release_time = ?');
+      values.push(tankData.release_time);
     }
 
     if (tankData.remarks !== undefined) {

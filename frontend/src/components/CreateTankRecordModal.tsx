@@ -27,6 +27,8 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
     temperature: 4,
     milk_type: 'cow',
     tank_release_time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+    packing_machine_detail: '',
+    release_time: '',
     remarks: '',
   });
   const [loading, setLoading] = useState(false);
@@ -59,6 +61,8 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
         temperature: editRecord.temperature || 4,
         milk_type: editRecord.milk_type || 'cow',
         tank_release_time: editRecord.tank_release_time || new Date().toLocaleTimeString('en-US', { hour12: false }),
+        packing_machine_detail: editRecord.packing_machine_detail || '',
+        release_time: editRecord.release_time || '',
         remarks: editRecord.remarks || '',
       });
     } else {
@@ -72,6 +76,8 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
         temperature: 4,
         milk_type: 'cow',
         tank_release_time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+        packing_machine_detail: '',
+        release_time: '',
         remarks: '',
       });
     }
@@ -143,6 +149,8 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
         temperature: 4,
         milk_type: 'cow',
         tank_release_time: new Date().toLocaleTimeString('en-US', { hour12: false }),
+        packing_machine_detail: '',
+        release_time: '',
         remarks: '',
       });
       setErrors({});
@@ -237,6 +245,15 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Input
+                      id="release_time"
+                      label="Tank Release Time"
+                      type="time"
+                      value={formData.release_time || ''}
+                      onChange={(e) => setFormData({ ...formData, release_time: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Input
                       id="batch_number"
                       label="Batch Number"
                       type="text"
@@ -247,6 +264,9 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
                       error={errors.batch_number}
                     />
                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Select
                       id="milk_type"
@@ -308,6 +328,16 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Input
+                      id="packing_machine_detail"
+                      label="Packing Machine Detail"
+                      type="text"
+                      value={formData.packing_machine_detail || ''}
+                      onChange={(e) => setFormData({ ...formData, packing_machine_detail: e.target.value })}
+                      placeholder="e.g., PM-01 / Line-A"
+                    />
+                  </div>
+                  <div>
+                    <Input
                       id="temperature"
                       label="Temperature (°C)"
                       type="number"
@@ -319,15 +349,16 @@ export function CreateTankRecordModal({ isOpen, onClose, onSuccess, editRecord }
                       error={errors.temperature}
                     />
                   </div>
-                  <Input
-                    id="remarks"
-                    label="Remarks"
-                    type="text"
-                    value={formData.remarks}
-                    onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-                    placeholder="Optional notes..."
-                  />
                 </div>
+
+                <Input
+                  id="remarks"
+                  label="Remarks"
+                  type="text"
+                  value={formData.remarks}
+                  onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
+                  placeholder="Optional notes..."
+                />
 
                 <div className="flex gap-4 justify-end pt-4 border-t border-secondary-200">
                   <Button type="button" variant="outline" onClick={onClose}>

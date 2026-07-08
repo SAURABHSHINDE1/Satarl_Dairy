@@ -56,6 +56,17 @@ const createTankRecordValidator = [
     .matches(/^([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/)
     .withMessage('Invalid tank release time format (expected HH:MM or HH:MM:SS)'),
   
+  body('packing_machine_detail')
+    .optional()
+    .trim()
+    .isLength({ max: 255 })
+    .withMessage('Packing machine detail must not exceed 255 characters'),
+  
+  body('release_time')
+    .optional()
+    .matches(/^([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/)
+    .withMessage('Invalid release time format (expected HH:MM or HH:MM:SS)'),
+  
   body('remarks')
     .optional()
     .trim()
@@ -110,6 +121,17 @@ const updateTankRecordValidator = [
     .optional()
     .matches(/^([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/)
     .withMessage('Invalid tank release time format (expected HH:MM or HH:MM:SS)'),
+  
+  body('packing_machine_detail')
+    .optional()
+    .trim()
+    .isLength({ max: 255 })
+    .withMessage('Packing machine detail must not exceed 255 characters'),
+  
+  body('release_time')
+    .optional()
+    .matches(/^([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/)
+    .withMessage('Invalid release time format (expected HH:MM or HH:MM:SS)'),
   
   body('remarks')
     .optional()

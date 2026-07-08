@@ -22,6 +22,8 @@ export interface TankRecord {
   process_operator_id: number;
   lab_incharge_id?: number;
   tank_release_time?: string;
+  packing_machine_detail?: string;
+  release_time?: string;
   remarks?: string;
   status: 'draft' | 'pending_lab' | 'pending_admin' | 'approved' | 'rejected';
   created_at: string;
@@ -105,5 +107,7 @@ export interface TankRecordFormData {
   temperature: number;
   milk_type: 'cow' | 'buffalo' | 'mixed';
   tank_release_time?: string;
+  packing_machine_detail?: string;
+  release_time?: string;
   remarks?: string;
 }

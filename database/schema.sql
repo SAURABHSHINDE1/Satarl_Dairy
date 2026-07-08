@@ -35,6 +35,8 @@ CREATE TABLE tank_records (
     process_operator_id INT NOT NULL,
     lab_incharge_id INT,
     tank_release_time TIME,
+    packing_machine_detail VARCHAR(255),
+    release_time TIME,
     remarks TEXT,
     status ENUM('draft', 'pending_lab', 'pending_admin', 'approved', 'rejected') DEFAULT 'draft',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
