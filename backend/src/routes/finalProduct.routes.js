@@ -5,6 +5,9 @@ const { authenticate, authorize } = require('../middlewares/auth.middleware');
 const { createFinalProductValidator } = require('../validators/finalProduct.validator');
 const validate = require('../middlewares/validation.middleware');
 
+const CAN_APPROVE = ['admin', 'lab_incharge', 'quality_incharge'];
+const CAN_WRITE   = ['admin', 'lab_incharge', 'quality_incharge'];
+
 // All routes require authentication
 router.use(authenticate);
 
@@ -14,21 +17,27 @@ router.get('/', finalProductController.getAllRecords);
 // GET single record
 router.get('/:id', finalProductController.getRecordById);
 
-// POST create — admin and lab_incharge only
-// (quality_incharge / chemist roles map to lab_incharge in existing role system)
+// POST create — admin, lab_incharge, quality_incharge
 router.post(
   '/',
-  authorize('admin', 'lab_incharge'),
+  authorize(...CAN_WRITE),
   createFinalProductValidator,
   validate,
   finalProductController.createRecord
 );
 
-// PUT update — admin and lab_incharge only
+// PUT update — admin, lab_incharge, quality_incharge
 router.put(
   '/:id',
-  authorize('admin', 'lab_incharge'),
+  authorize(...CAN_WRITE),
   finalProductController.updateRecord
+);
+
+// POST approve/reject — admin, lab_incharge, quality_incharge
+router.post(
+  '/:id/approve',
+  authorize(...CAN_APPROVE),
+  finalProductController.approveRecord
 );
 
 // DELETE — admin only

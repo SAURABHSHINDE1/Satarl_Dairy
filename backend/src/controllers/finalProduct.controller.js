@@ -6,6 +6,7 @@ class FinalProductController {
       const filters = {
         date:      req.query.date,
         shift:     req.query.shift,
+        status:    req.query.status,
         date_from: req.query.date_from,
         date_to:   req.query.date_to,
         limit:     req.query.limit  || 100,
@@ -63,6 +64,24 @@ class FinalProductController {
     try {
       const result = await finalProductService.deleteRecord(req.params.id, req.user.id);
       res.json({ success: true, message: result.message });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async approveRecord(req, res, next) {
+    try {
+      const { action, comment } = req.body;
+      const record = await finalProductService.approveRecord(
+        req.params.id,
+        { action, comment },
+        req.user.id
+      );
+      res.json({
+        success: true,
+        message: `Record ${action} successfully`,
+        data: record,
+      });
     } catch (error) {
       next(error);
     }

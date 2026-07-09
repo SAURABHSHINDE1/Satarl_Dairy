@@ -82,6 +82,33 @@ class BiProductService {
 
     return { message: 'Report deleted successfully' };
   }
+
+  async approveReport(id, { action, comment }, userId) {
+    const existing = await biProductRepository.findById(id);
+    if (!existing) throw new Error('Bi-product report not found');
+
+    if (!['approved', 'rejected'].includes(action)) {
+      throw new Error('Invalid action — must be approved or rejected');
+    }
+
+    await biProductRepository.approve(id, {
+      status: action,
+      approved_by: userId,
+      approval_comment: comment || null,
+    });
+
+    await activityRepository.create({
+      user_id: userId,
+      action,
+      entity_type: 'bi_product_report',
+      entity_id: id,
+      details: `${action === 'approved' ? 'Approved' : 'Rejected'} bi-product report for ${existing.product_name} (Batch: ${existing.batch_no})${
+        comment ? ` — Comment: ${comment}` : ''
+      }`,
+    });
+
+    return await biProductRepository.findById(id);
+  }
 }
 
 module.exports = new BiProductService();

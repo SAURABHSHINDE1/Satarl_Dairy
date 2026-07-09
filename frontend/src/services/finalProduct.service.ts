@@ -49,4 +49,16 @@ export const finalProductService = {
     );
     return response.data;
   },
+
+  async approve(
+    id: number,
+    action: 'approved' | 'rejected',
+    comment?: string
+  ): Promise<ApiResponse<FinalProductRecord>> {
+    const response = await api.post<ApiResponse<FinalProductRecord>>(
+      `/final-product-records/${id}/approve`,
+      { action, comment }
+    );
+    return response.data;
+  },
 };

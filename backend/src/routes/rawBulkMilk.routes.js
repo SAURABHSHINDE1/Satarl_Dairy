@@ -5,6 +5,9 @@ const { authenticate, authorize } = require('../middlewares/auth.middleware');
 const { createRawBulkMilkValidator } = require('../validators/rawBulkMilk.validator');
 const validate = require('../middlewares/validation.middleware');
 
+const CAN_APPROVE = ['admin', 'lab_incharge', 'quality_incharge'];
+const CAN_WRITE   = ['admin', 'lab_incharge', 'quality_incharge'];
+
 router.use(authenticate);
 
 // GET list — all authenticated users
@@ -13,11 +16,14 @@ router.get('/', rawBulkMilkController.getAllRecords);
 // GET single
 router.get('/:id', rawBulkMilkController.getRecordById);
 
-// POST create — admin and lab_incharge (quality_incharge/chemist)
-router.post('/', authorize('admin', 'lab_incharge'), createRawBulkMilkValidator, validate, rawBulkMilkController.createRecord);
+// POST create — admin, lab_incharge, quality_incharge
+router.post('/', authorize(...CAN_WRITE), createRawBulkMilkValidator, validate, rawBulkMilkController.createRecord);
 
-// PUT update — admin and lab_incharge
-router.put('/:id', authorize('admin', 'lab_incharge'), rawBulkMilkController.updateRecord);
+// PUT update — admin, lab_incharge, quality_incharge
+router.put('/:id', authorize(...CAN_WRITE), rawBulkMilkController.updateRecord);
+
+// POST approve/reject
+router.post('/:id/approve', authorize(...CAN_APPROVE), rawBulkMilkController.approveRecord);
 
 // DELETE — admin only
 router.delete('/:id', authorize('admin'), rawBulkMilkController.deleteRecord);

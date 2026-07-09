@@ -19,9 +19,12 @@ const mapRecord = (row) => {
 class RawBulkMilkRepository {
   async findAll(filters = {}) {
     let query = `
-      SELECT r.*, u.full_name AS created_by_name
+      SELECT r.*,
+             u.full_name  AS created_by_name,
+             ab.full_name AS approved_by_name
       FROM raw_bulk_milk_testing_records r
-      LEFT JOIN users u ON r.created_by = u.id
+      LEFT JOIN users u  ON r.created_by  = u.id
+      LEFT JOIN users ab ON r.approved_by = ab.id
       WHERE 1=1
     `;
     const params = [];
@@ -43,6 +46,11 @@ class RawBulkMilkRepository {
       params.push(`%${filters.sample_name}%`);
     }
 
+    if (filters.status) {
+      query += ' AND r.status = ?';
+      params.push(filters.status);
+    }
+
     query += ' ORDER BY r.date DESC, r.testing_time ASC, r.created_at DESC';
 
     if (filters.limit) {
@@ -60,13 +68,26 @@ class RawBulkMilkRepository {
 
   async findById(id) {
     const [rows] = await pool.query(
-      `SELECT r.*, u.full_name AS created_by_name
+      `SELECT r.*,
+              u.full_name  AS created_by_name,
+              ab.full_name AS approved_by_name
        FROM raw_bulk_milk_testing_records r
-       LEFT JOIN users u ON r.created_by = u.id
+       LEFT JOIN users u  ON r.created_by  = u.id
+       LEFT JOIN users ab ON r.approved_by = ab.id
        WHERE r.id = ?`,
       [id]
     );
     return mapRecord(rows[0]);
+  }
+
+  async approve(id, { status, approved_by, approval_comment }) {
+    const [result] = await pool.query(
+      `UPDATE raw_bulk_milk_testing_records
+       SET status = ?, approved_by = ?, approved_at = NOW(), approval_comment = ?
+       WHERE id = ?`,
+      [status, approved_by, approval_comment || null, id]
+    );
+    return result.affectedRows;
   }
 
   async create(data) {

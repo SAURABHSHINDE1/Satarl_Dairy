@@ -8,6 +8,7 @@ class RawBulkMilkController {
         date_from:   req.query.date_from,
         date_to:     req.query.date_to,
         sample_name: req.query.sample_name,
+        status:      req.query.status,
         limit:       req.query.limit  || 200,
         offset:      req.query.offset || 0,
       };
@@ -49,6 +50,22 @@ class RawBulkMilkController {
     try {
       const result = await rawBulkMilkService.deleteRecord(req.params.id, req.user.id);
       res.json({ success: true, message: result.message });
+    } catch (error) { next(error); }
+  }
+
+  async approveRecord(req, res, next) {
+    try {
+      const { action, comment } = req.body;
+      const record = await rawBulkMilkService.approveRecord(
+        req.params.id,
+        { action, comment },
+        req.user.id
+      );
+      res.json({
+        success: true,
+        message: `Record ${action} successfully`,
+        data: record,
+      });
     } catch (error) { next(error); }
   }
 }

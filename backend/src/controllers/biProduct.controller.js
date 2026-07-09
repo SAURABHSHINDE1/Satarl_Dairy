@@ -9,6 +9,7 @@ class BiProductController {
         date_to:      req.query.date_to,
         product_name: req.query.product_name,
         batch_no:     req.query.batch_no,
+        status:       req.query.status,
         limit:        req.query.limit  || 100,
         offset:       req.query.offset || 0,
       };
@@ -62,6 +63,24 @@ class BiProductController {
     try {
       const result = await biProductService.deleteReport(req.params.id, req.user.id);
       res.json({ success: true, message: result.message });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async approveReport(req, res, next) {
+    try {
+      const { action, comment } = req.body;
+      const report = await biProductService.approveReport(
+        req.params.id,
+        { action, comment },
+        req.user.id
+      );
+      res.json({
+        success: true,
+        message: `Report ${action} successfully`,
+        data: report,
+      });
     } catch (error) {
       next(error);
     }

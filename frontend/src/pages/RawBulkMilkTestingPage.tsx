@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Plus, Save, Trash2, Eye, Edit2, RefreshCw, Download, Droplets,
+  CheckCircle2, XCircle, ShieldCheck,
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -11,6 +12,7 @@ import { Input } from '../components/ui/Input';
 import { rawBulkMilkService } from '../services/rawBulkMilk.service';
 import type { RawBulkMilkRecord, RawBulkMilkFormData } from '../types';
 import { formatDate } from '../lib/utils';
+import { useAuthStore } from '../store/auth.store';
 
 // ─── Preset options ────────────────────────────────────────────────────────────
 const SAMPLE_NAME_PRESETS = ['Silo-1', 'Silo-2', 'CT', 'BMC', 'Route', 'Local', 'Other'];
@@ -23,8 +25,20 @@ type RowData = RawBulkMilkFormData & {
   _milkTypePreset: string;
 };
 
+// ─── Safe UUID generator (works on HTTP / non-secure origins) ───────────────
+const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
+
 const newRow = (date: string): RowData => ({
-  _id:              crypto.randomUUID(),
+  _id:              generateId(),
   _samplePreset:    'Silo-1',
   _milkTypePreset:  'Cow',
   date,
@@ -111,8 +125,19 @@ export default function RawBulkMilkTestingPage() {
   const [saving, setSaving] = useState(false);
 
   // Records filter state
-  const [filterDate, setFilterDate] = useState(today);
+  const [filterDate, setFilterDate] = useState('');
   const [filterSample, setFilterSample] = useState('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+
+  // Current user & permissions
+  const { user: currentUser } = useAuthStore();
+  const canApprove = currentUser?.role === 'admin' || currentUser?.role === 'lab_incharge' || currentUser?.role === 'quality_incharge';
+
+  // Approval modal state
+  const [approvalRecord, setApprovalRecord] = useState<RawBulkMilkRecord | null>(null);
+  const [approvalAction, setApprovalAction] = useState<'approved' | 'rejected'>('approved');
+  const [approvalComment, setApprovalComment] = useState('');
+  const [approving, setApproving] = useState(false);
 
   // Tab
   const [activeTab, setActiveTab] = useState<'entry' | 'records'>('entry');
@@ -125,11 +150,12 @@ export default function RawBulkMilkTestingPage() {
   const queryClient = useQueryClient();
 
   const { data: records, isLoading, refetch } = useQuery({
-    queryKey: ['rawBulkMilk', filterDate, filterSample],
+    queryKey: ['rawBulkMilk', filterDate, filterSample, filterStatus],
     queryFn: () =>
       rawBulkMilkService.getAll({
         ...(filterDate ? { date: filterDate } : {}),
         ...(filterSample ? { sample_name: filterSample } : {}),
+        ...(filterStatus !== 'all' ? { status: filterStatus } : {}),
       }),
   });
 
@@ -200,6 +226,28 @@ export default function RawBulkMilkTestingPage() {
       toast.error(err.response?.data?.message || 'Update failed');
     } finally {
       setEditSaving(false);
+    }
+  };
+
+  // ── Approve / Reject ───────────────────────────────────────────────────
+  const openApprovalModal = (rec: RawBulkMilkRecord, action: 'approved' | 'rejected') => {
+    setApprovalRecord(rec);
+    setApprovalAction(action);
+    setApprovalComment('');
+  };
+
+  const handleApprove = async () => {
+    if (!approvalRecord) return;
+    setApproving(true);
+    try {
+      await rawBulkMilkService.approve(approvalRecord.id, approvalAction, approvalComment || undefined);
+      toast.success(`Record ${approvalAction === 'approved' ? 'approved ✅' : 'rejected ❌'} successfully`);
+      setApprovalRecord(null);
+      queryClient.invalidateQueries({ queryKey: ['rawBulkMilk'] });
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Action failed');
+    } finally {
+      setApproving(false);
     }
   };
 
@@ -451,8 +499,21 @@ export default function RawBulkMilkTestingPage() {
                   ))}
                 </select>
               </div>
+              <div className="flex-1 min-w-[180px]">
+                <label className="block text-sm font-medium text-text-secondary mb-1">Filter by Status</label>
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="w-full px-3 py-2 border border-secondary-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300 bg-white"
+                >
+                  <option value="all">All Status</option>
+                  <option value="pending">🟡 Pending</option>
+                  <option value="approved">✅ Approved</option>
+                  <option value="rejected">❌ Rejected</option>
+                </select>
+              </div>
               <div className="pb-0.5">
-                <Button variant="outline" onClick={() => { setFilterDate(''); setFilterSample(''); }}>Clear</Button>
+                <Button variant="outline" onClick={() => { setFilterDate(''); setFilterSample(''); setFilterStatus('all'); }}>Clear</Button>
               </div>
             </div>
           </Card>
@@ -486,7 +547,7 @@ export default function RawBulkMilkTestingPage() {
                 <table className="w-full text-sm" style={{ minWidth: 1500 }}>
                   <thead>
                     <tr className="bg-secondary-50 border-b border-secondary-200">
-                      {['Date', 'Time', 'Sample', 'Milk Type', 'Qty (L)', 'Temp °C', 'OT', 'Acidity %', 'Alcohol', 'FAT %', 'CLR', 'SNF', 'Protein %', 'Na/Electrolyte', 'pH', 'Chemist', 'Q. Incharge', 'Actions'].map(h => (
+                      {['Date', 'Time', 'Sample', 'Milk Type', 'Qty (L)', 'Temp °C', 'OT', 'Acidity %', 'Alcohol', 'FAT %', 'CLR', 'SNF', 'Protein %', 'Na/Electrolyte', 'pH', 'Chemist', 'Q. Incharge', 'Status', 'Actions'].map(h => (
                         <th key={h} className="py-3 px-3 text-left text-xs font-semibold text-text-secondary whitespace-nowrap">{h}</th>
                       ))}
                     </tr>
@@ -519,6 +580,22 @@ export default function RawBulkMilkTestingPage() {
                         <td className="py-2.5 px-3 text-xs text-text-primary">{rec.ph?.toFixed(2) ?? '—'}</td>
                         <td className="py-2.5 px-3 text-xs text-text-secondary">{rec.chemist_name ?? '—'}</td>
                         <td className="py-2.5 px-3 text-xs text-text-secondary">{rec.quality_incharge_name ?? '—'}</td>
+                        {/* Status badge */}
+                        <td className="py-2.5 px-3">
+                          {rec.status === 'approved' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                              <CheckCircle2 className="w-3 h-3" /> Approved
+                            </span>
+                          ) : rec.status === 'rejected' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                              <XCircle className="w-3 h-3" /> Rejected
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
+                              <ShieldCheck className="w-3 h-3" /> Pending
+                            </span>
+                          )}
+                        </td>
                         <td className="py-2.5 px-3">
                           <div className="flex items-center gap-1">
                             <button onClick={() => setViewRecord(rec)} className="p-1.5 rounded hover:bg-secondary-100 text-text-secondary hover:text-emerald-600 transition-colors" title="View">
@@ -527,6 +604,24 @@ export default function RawBulkMilkTestingPage() {
                             <button onClick={() => setEditRecord({ ...rec })} className="p-1.5 rounded hover:bg-secondary-100 text-text-secondary hover:text-emerald-600 transition-colors" title="Edit">
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
+                            {canApprove && rec.status !== 'approved' && (
+                              <button
+                                onClick={() => openApprovalModal(rec, 'approved')}
+                                className="p-1.5 rounded hover:bg-emerald-50 text-emerald-600 hover:text-emerald-700 transition-colors"
+                                title="Approve"
+                              >
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                            {canApprove && rec.status !== 'rejected' && (
+                              <button
+                                onClick={() => openApprovalModal(rec, 'rejected')}
+                                className="p-1.5 rounded hover:bg-red-50 text-red-500 hover:text-red-600 transition-colors"
+                                title="Reject"
+                              >
+                                <XCircle className="w-3.5 h-3.5" />
+                              </button>
+                            )}
                           </div>
                         </td>
                       </motion.tr>
@@ -539,9 +634,51 @@ export default function RawBulkMilkTestingPage() {
         </motion.div>
       )}
 
-      {/* ══════════════════════════════════════════════════════════════════════ */}
-      {/* VIEW MODAL                                                             */}
-      {/* ══════════════════════════════════════════════════════════════════════ */}
+      {/* APPROVAL MODAL */}
+      {approvalRecord && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-md">
+            <Card>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className={`text-lg font-bold flex items-center gap-2 ${
+                  approvalAction === 'approved' ? 'text-emerald-700' : 'text-red-700'
+                }`}>
+                  {approvalAction === 'approved'
+                    ? <><CheckCircle2 className="w-5 h-5" /> Approve Record</>
+                    : <><XCircle className="w-5 h-5" /> Reject Record</>}
+                </h2>
+                <button onClick={() => setApprovalRecord(null)} className="p-2 rounded-lg hover:bg-secondary-100 text-text-secondary transition-colors">✕</button>
+              </div>
+              <p className="text-sm text-text-secondary mb-4">
+                Sample: <span className="font-semibold text-text-primary">{approvalRecord.sample_name}</span> &nbsp;|
+                Date: <span className="font-semibold text-text-primary">{formatDate(approvalRecord.date)}</span>
+              </p>
+              <div className="mb-5">
+                <label className="block text-sm font-medium text-text-secondary mb-1">Comment (optional)</label>
+                <textarea
+                  value={approvalComment}
+                  onChange={(e) => setApprovalComment(e.target.value)}
+                  rows={3}
+                  placeholder="Add a comment..."
+                  className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 resize-none"
+                />
+              </div>
+              <div className="flex gap-3 justify-end">
+                <Button variant="outline" onClick={() => setApprovalRecord(null)}>Cancel</Button>
+                <Button
+                  disabled={approving}
+                  onClick={handleApprove}
+                  className={approvalAction === 'approved' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'}
+                >
+                  {approving ? 'Processing...' : approvalAction === 'approved' ? '✅ Confirm Approve' : '❌ Confirm Reject'}
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
+        </div>
+      )}
+
+      {/* VIEW MODAL */}
       {viewRecord && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-2xl">

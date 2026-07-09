@@ -8,6 +8,7 @@ export const biProductService = {
     date_to?: string;
     product_name?: string;
     batch_no?: string;
+    status?: string;
     limit?: number;
     offset?: number;
   }): Promise<ApiResponse<BiProductReport[]>> {
@@ -47,6 +48,18 @@ export const biProductService = {
   async delete(id: number): Promise<ApiResponse<void>> {
     const response = await api.delete<ApiResponse<void>>(
       `/bi-product-reports/${id}`
+    );
+    return response.data;
+  },
+
+  async approve(
+    id: number,
+    action: 'approved' | 'rejected',
+    comment?: string
+  ): Promise<ApiResponse<BiProductReport>> {
+    const response = await api.post<ApiResponse<BiProductReport>>(
+      `/bi-product-reports/${id}/approve`,
+      { action, comment }
     );
     return response.data;
   },

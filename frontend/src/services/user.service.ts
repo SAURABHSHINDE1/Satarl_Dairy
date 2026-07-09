@@ -22,7 +22,7 @@ export const userService = {
     password: string;
     email?: string;
     full_name: string;
-    role: 'admin' | 'lab_incharge' | 'operator';
+    role: 'admin' | 'lab_incharge' | 'quality_incharge' | 'operator';
   }): Promise<ApiResponse<User>> {
     const response = await api.post<ApiResponse<User>>('/users', data);
     return response.data;
@@ -35,7 +35,7 @@ export const userService = {
       password?: string;
       email?: string;
       full_name?: string;
-      role?: 'admin' | 'lab_incharge' | 'operator';
+      role?: 'admin' | 'lab_incharge' | 'quality_incharge' | 'operator';
       is_active?: boolean;
     }
   ): Promise<ApiResponse<User>> {

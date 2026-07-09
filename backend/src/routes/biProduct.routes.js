@@ -5,6 +5,9 @@ const { authenticate, authorize } = require('../middlewares/auth.middleware');
 const { createBiProductValidator } = require('../validators/biProduct.validator');
 const validate = require('../middlewares/validation.middleware');
 
+const CAN_APPROVE = ['admin', 'lab_incharge', 'quality_incharge'];
+const CAN_WRITE   = ['admin', 'lab_incharge', 'quality_incharge'];
+
 // All routes require authentication
 router.use(authenticate);
 
@@ -14,20 +17,27 @@ router.get('/', biProductController.getAllReports);
 // GET single report
 router.get('/:id', biProductController.getReportById);
 
-// POST create — admin and lab_incharge (quality_incharge/chemist in this system)
+// POST create — admin, lab_incharge, quality_incharge
 router.post(
   '/',
-  authorize('admin', 'lab_incharge'),
+  authorize(...CAN_WRITE),
   createBiProductValidator,
   validate,
   biProductController.createReport
 );
 
-// PUT update — admin and lab_incharge
+// PUT update — admin, lab_incharge, quality_incharge
 router.put(
   '/:id',
-  authorize('admin', 'lab_incharge'),
+  authorize(...CAN_WRITE),
   biProductController.updateReport
+);
+
+// POST approve/reject — admin, lab_incharge, quality_incharge
+router.post(
+  '/:id/approve',
+  authorize(...CAN_APPROVE),
+  biProductController.approveReport
 );
 
 // DELETE — admin only

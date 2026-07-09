@@ -17,6 +17,7 @@ class FinalProductService {
     if (formatted.date)      formatted.date      = formatDate(formatted.date);
     if (formatted.date_from) formatted.date_from = formatDate(formatted.date_from);
     if (formatted.date_to)   formatted.date_to   = formatDate(formatted.date_to);
+    // status filter passed through as-is
     return await finalProductRepository.findAll(formatted);
   }
 
@@ -81,6 +82,33 @@ class FinalProductService {
     });
 
     return { message: 'Record deleted successfully' };
+  }
+
+  async approveRecord(id, { action, comment }, userId) {
+    const existing = await finalProductRepository.findById(id);
+    if (!existing) throw new Error('Record not found');
+
+    if (!['approved', 'rejected'].includes(action)) {
+      throw new Error('Invalid action — must be approved or rejected');
+    }
+
+    await finalProductRepository.approve(id, {
+      status: action,
+      approved_by: userId,
+      approval_comment: comment || null,
+    });
+
+    await activityRepository.create({
+      user_id: userId,
+      action,
+      entity_type: 'final_product_storage_record',
+      entity_id: id,
+      details: `${action === 'approved' ? 'Approved' : 'Rejected'} final product storage record for tank ${existing.tank_no}${
+        comment ? ` — Comment: ${comment}` : ''
+      }`,
+    });
+
+    return await finalProductRepository.findById(id);
   }
 }
 

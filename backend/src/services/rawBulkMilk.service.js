@@ -75,6 +75,33 @@ class RawBulkMilkService {
 
     return { message: 'Record deleted successfully' };
   }
+
+  async approveRecord(id, { action, comment }, userId) {
+    const existing = await rawBulkMilkRepository.findById(id);
+    if (!existing) throw new Error('Raw bulk milk testing record not found');
+
+    if (!['approved', 'rejected'].includes(action)) {
+      throw new Error('Invalid action — must be approved or rejected');
+    }
+
+    await rawBulkMilkRepository.approve(id, {
+      status: action,
+      approved_by: userId,
+      approval_comment: comment || null,
+    });
+
+    await activityRepository.create({
+      user_id: userId,
+      action,
+      entity_type: 'raw_bulk_milk_testing_record',
+      entity_id: id,
+      details: `${action === 'approved' ? 'Approved' : 'Rejected'} raw bulk milk record: ${existing.sample_name}${
+        comment ? ` — Comment: ${comment}` : ''
+      }`,
+    });
+
+    return await rawBulkMilkRepository.findById(id);
+  }
 }
 
 module.exports = new RawBulkMilkService();

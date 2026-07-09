@@ -76,18 +76,20 @@ export default function UsersPage() {
 
   const getRoleBadgeColor = (role: string) => {
     const colors = {
-      admin: 'bg-primary-100 text-primary-700',
-      lab_incharge: 'bg-accent-100 text-accent-700',
-      operator: 'bg-secondary-100 text-secondary-700',
+      admin:            'bg-primary-100 text-primary-700',
+      lab_incharge:     'bg-accent-100 text-accent-700',
+      quality_incharge: 'bg-teal-100 text-teal-700',
+      operator:         'bg-secondary-100 text-secondary-700',
     };
     return colors[role as keyof typeof colors] || 'bg-secondary-100 text-secondary-700';
   };
 
   const getRoleLabel = (role: string) => {
     const labels = {
-      admin: 'Admin',
-      lab_incharge: 'Lab Incharge',
-      operator: 'Operator',
+      admin:            'Admin',
+      lab_incharge:     'Lab Incharge',
+      quality_incharge: 'Quality Incharge',
+      operator:         'Operator',
     };
     return labels[role as keyof typeof labels] || role;
   };

@@ -3,7 +3,7 @@ export interface User {
   username: string;
   email?: string;
   full_name: string;
-  role: 'admin' | 'lab_incharge' | 'operator';
+  role: 'admin' | 'lab_incharge' | 'quality_incharge' | 'operator';
   is_active?: boolean;
   last_login?: string;
   created_at?: string;
@@ -32,11 +32,13 @@ export interface TankRecord {
   lab_incharge_name?: string;
 }
 
+export type ApprovalStatus = 'pending' | 'approved' | 'rejected';
+
 export interface Approval {
   id: number;
   tank_record_id: number;
   approver_id: number;
-  approver_role: 'lab_incharge' | 'admin';
+  approver_role: 'lab_incharge' | 'quality_incharge' | 'admin';
   action: 'approved' | 'rejected';
   comments?: string;
   approved_at: string;
@@ -133,6 +135,11 @@ export interface FinalProductRecord {
   remark?: string;
   chemist_name?: string;
   quality_incharge_name?: string;
+  status?: ApprovalStatus;
+  approved_by?: number;
+  approved_by_name?: string;
+  approved_at?: string;
+  approval_comment?: string;
   created_by?: number;
   created_by_name?: string;
   created_at: string;
@@ -180,6 +187,11 @@ export interface BiProductReport {
   moisture?: number | null;
   chemist_name?: string;
   quality_incharge_name?: string;
+  status?: ApprovalStatus;
+  approved_by?: number;
+  approved_by_name?: string;
+  approved_at?: string;
+  approval_comment?: string;
   created_by?: number;
   created_by_name?: string;
   created_at: string;
@@ -225,6 +237,11 @@ export interface RawBulkMilkRecord {
   ph?: number;
   chemist_name?: string;
   quality_incharge_name?: string;
+  status?: ApprovalStatus;
+  approved_by?: number;
+  approved_by_name?: string;
+  approved_at?: string;
+  approval_comment?: string;
   created_by?: number;
   created_by_name?: string;
   created_at: string;

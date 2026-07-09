@@ -7,6 +7,7 @@ export const rawBulkMilkService = {
     date_from?: string;
     date_to?: string;
     sample_name?: string;
+    status?: string;
     limit?: number;
     offset?: number;
   }): Promise<ApiResponse<RawBulkMilkRecord[]>> {
@@ -46,6 +47,18 @@ export const rawBulkMilkService = {
   async delete(id: number): Promise<ApiResponse<void>> {
     const response = await api.delete<ApiResponse<void>>(
       `/raw-bulk-milk-records/${id}`
+    );
+    return response.data;
+  },
+
+  async approve(
+    id: number,
+    action: 'approved' | 'rejected',
+    comment?: string
+  ): Promise<ApiResponse<RawBulkMilkRecord>> {
+    const response = await api.post<ApiResponse<RawBulkMilkRecord>>(
+      `/raw-bulk-milk-records/${id}/approve`,
+      { action, comment }
     );
     return response.data;
   },

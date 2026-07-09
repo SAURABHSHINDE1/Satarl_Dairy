@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Plus, Save, Trash2, Eye, Edit2, RefreshCw, Download, Package2
+  Plus, Save, Trash2, Eye, Edit2, RefreshCw, Download, Package2,
+  CheckCircle2, XCircle, ShieldCheck
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -12,6 +13,7 @@ import { Select } from '../components/ui/Select';
 import { biProductService } from '../services/biProduct.service';
 import type { BiProductReport, BiProductFormData } from '../types';
 import { formatDate } from '../lib/utils';
+import { useAuthStore } from '../store/auth.store';
 
 // ─── Product config — which fields are relevant per product ─────────────────
 const PRESET_PRODUCTS = ['Dahi', 'Lassi', 'Paneer', 'Peda', 'Khoya', 'Other'];
@@ -35,11 +37,23 @@ function isFieldActive(product: string, field: FieldKey): boolean {
   return activeFields.includes(field);
 }
 
+// ─── Safe UUID generator (works on HTTP / non-secure origins) ───────────────
+const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
+
 // ─── Empty row factory ────────────────────────────────────────────────────────
 type RowData = BiProductFormData & { _id: string; _customProduct?: string };
 
 const emptyRow = (date: string): RowData => ({
-  _id: crypto.randomUUID(),
+  _id: generateId(),
   batch_no: '',
   date,
   product_name: 'Dahi',
@@ -109,8 +123,19 @@ export default function FinalBiProductReportPage() {
   const today = new Date().toISOString().split('T')[0];
 
   // Filter state (Records tab)
-  const [filterDate, setFilterDate] = useState(today);
+  const [filterDate, setFilterDate] = useState('');
   const [filterProduct, setFilterProduct] = useState('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+
+  // Current user & permissions
+  const { user: currentUser } = useAuthStore();
+  const canApprove = currentUser?.role === 'admin' || currentUser?.role === 'lab_incharge' || currentUser?.role === 'quality_incharge';
+
+  // Approval modal state
+  const [approvalRecord, setApprovalRecord] = useState<BiProductReport | null>(null);
+  const [approvalAction, setApprovalAction] = useState<'approved' | 'rejected'>('approved');
+  const [approvalComment, setApprovalComment] = useState('');
+  const [approving, setApproving] = useState(false);
 
   // Entry form state
   const [formDate, setFormDate] = useState(today);
@@ -130,11 +155,12 @@ export default function FinalBiProductReportPage() {
   const queryClient = useQueryClient();
 
   const { data: records, isLoading, refetch } = useQuery({
-    queryKey: ['biProductReports', filterDate, filterProduct],
+    queryKey: ['biProductReports', filterDate, filterProduct, filterStatus],
     queryFn: () =>
       biProductService.getAll({
         ...(filterDate ? { date: filterDate } : {}),
         ...(filterProduct ? { product_name: filterProduct } : {}),
+        ...(filterStatus !== 'all' ? { status: filterStatus } : {}),
       }),
   });
 
@@ -210,6 +236,28 @@ export default function FinalBiProductReportPage() {
       toast.error(error.response?.data?.message || 'Update failed');
     } finally {
       setEditSaving(false);
+    }
+  };
+
+  // ── Approve / Reject ───────────────────────────────────────────────────
+  const openApprovalModal = (rec: BiProductReport, action: 'approved' | 'rejected') => {
+    setApprovalRecord(rec);
+    setApprovalAction(action);
+    setApprovalComment('');
+  };
+
+  const handleApprove = async () => {
+    if (!approvalRecord) return;
+    setApproving(true);
+    try {
+      await biProductService.approve(approvalRecord.id, approvalAction, approvalComment || undefined);
+      toast.success(`Report ${approvalAction === 'approved' ? 'approved ✅' : 'rejected ❌'} successfully`);
+      setApprovalRecord(null);
+      queryClient.invalidateQueries({ queryKey: ['biProductReports'] });
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Action failed');
+    } finally {
+      setApproving(false);
     }
   };
 
@@ -526,8 +574,22 @@ export default function FinalBiProductReportPage() {
                   ]}
                 />
               </div>
+              <div className="flex-1 min-w-[180px]">
+                <Select
+                  id="bp-filter-status"
+                  label="Filter by Status"
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  options={[
+                    { value: 'all',      label: 'All Status' },
+                    { value: 'pending',  label: '🟡 Pending' },
+                    { value: 'approved', label: '✅ Approved' },
+                    { value: 'rejected', label: '❌ Rejected' },
+                  ]}
+                />
+              </div>
               <div className="pb-0.5">
-                <Button variant="outline" onClick={() => { setFilterDate(''); setFilterProduct(''); }}>
+                <Button variant="outline" onClick={() => { setFilterDate(''); setFilterProduct(''); setFilterStatus('all'); }}>
                   Clear
                 </Button>
               </div>
@@ -569,7 +631,7 @@ export default function FinalBiProductReportPage() {
                         'Date', 'Batch No.', 'Product', 'Body/Structure', 'Sensory',
                         'Taste', 'Temp °C', 'Acidity %', 'pH', 'Self Life',
                         'FDM %', 'FAT %', 'TS %', 'Lassi Viscosity', 'Moisture %',
-                        'Chemist', 'Q. Incharge', 'Actions'
+                        'Chemist', 'Q. Incharge', 'Status', 'Actions'
                       ].map((h) => (
                         <th key={h} className="py-3 px-3 text-left text-xs font-semibold text-text-secondary whitespace-nowrap">{h}</th>
                       ))}
@@ -605,6 +667,22 @@ export default function FinalBiProductReportPage() {
                         <td className="py-2.5 px-3 text-xs text-text-primary">{rec.moisture?.toFixed(2) ?? '—'}</td>
                         <td className="py-2.5 px-3 text-xs text-text-secondary">{rec.chemist_name ?? '—'}</td>
                         <td className="py-2.5 px-3 text-xs text-text-secondary">{rec.quality_incharge_name ?? '—'}</td>
+                        {/* Status badge */}
+                        <td className="py-2.5 px-3">
+                          {rec.status === 'approved' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                              <CheckCircle2 className="w-3 h-3" /> Approved
+                            </span>
+                          ) : rec.status === 'rejected' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                              <XCircle className="w-3 h-3" /> Rejected
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
+                              <ShieldCheck className="w-3 h-3" /> Pending
+                            </span>
+                          )}
+                        </td>
                         <td className="py-2.5 px-3">
                           <div className="flex items-center gap-1">
                             <button
@@ -621,6 +699,24 @@ export default function FinalBiProductReportPage() {
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
+                            {canApprove && rec.status !== 'approved' && (
+                              <button
+                                onClick={() => openApprovalModal(rec, 'approved')}
+                                className="p-1.5 rounded hover:bg-emerald-50 text-emerald-600 hover:text-emerald-700 transition-colors"
+                                title="Approve"
+                              >
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                            {canApprove && rec.status !== 'rejected' && (
+                              <button
+                                onClick={() => openApprovalModal(rec, 'rejected')}
+                                className="p-1.5 rounded hover:bg-red-50 text-red-500 hover:text-red-600 transition-colors"
+                                title="Reject"
+                              >
+                                <XCircle className="w-3.5 h-3.5" />
+                              </button>
+                            )}
                           </div>
                         </td>
                       </motion.tr>
@@ -633,9 +729,51 @@ export default function FinalBiProductReportPage() {
         </motion.div>
       )}
 
-      {/* ════════════════════════════════════════════════════════════════ */}
-      {/* VIEW MODAL                                                        */}
-      {/* ════════════════════════════════════════════════════════════════ */}
+      {/* APPROVAL MODAL */}
+      {approvalRecord && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-md">
+            <Card>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className={`text-lg font-bold flex items-center gap-2 ${
+                  approvalAction === 'approved' ? 'text-emerald-700' : 'text-red-700'
+                }`}>
+                  {approvalAction === 'approved'
+                    ? <><CheckCircle2 className="w-5 h-5" /> Approve Report</>
+                    : <><XCircle className="w-5 h-5" /> Reject Report</>}
+                </h2>
+                <button onClick={() => setApprovalRecord(null)} className="p-2 rounded-lg hover:bg-secondary-100 text-text-secondary transition-colors">✕</button>
+              </div>
+              <p className="text-sm text-text-secondary mb-4">
+                Product: <span className="font-semibold text-text-primary">{approvalRecord.product_name}</span> &nbsp;|
+                Batch: <span className="font-mono font-semibold text-text-primary">{approvalRecord.batch_no}</span>
+              </p>
+              <div className="mb-5">
+                <label className="block text-sm font-medium text-text-secondary mb-1">Comment (optional)</label>
+                <textarea
+                  value={approvalComment}
+                  onChange={(e) => setApprovalComment(e.target.value)}
+                  rows={3}
+                  placeholder="Add a comment..."
+                  className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 resize-none"
+                />
+              </div>
+              <div className="flex gap-3 justify-end">
+                <Button variant="outline" onClick={() => setApprovalRecord(null)}>Cancel</Button>
+                <Button
+                  disabled={approving}
+                  onClick={handleApprove}
+                  className={approvalAction === 'approved' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'}
+                >
+                  {approving ? 'Processing...' : approvalAction === 'approved' ? '✅ Confirm Approve' : '❌ Confirm Reject'}
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
+        </div>
+      )}
+
+      {/* VIEW MODAL */}
       {viewRecord && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-2xl">

@@ -20,7 +20,7 @@ interface UserFormData {
   username: string;
   full_name: string;
   email: string;
-  role: 'admin' | 'lab_incharge' | 'operator';
+  role: 'admin' | 'lab_incharge' | 'quality_incharge' | 'operator';
   password: string;
   confirmPassword: string;
   is_active: boolean;
@@ -130,9 +130,10 @@ export function UserModal({ isOpen, onClose, onSuccess, editUser }: UserModalPro
   };
 
   const roleOptions = [
-    { value: 'operator', label: 'Operator' },
-    { value: 'lab_incharge', label: 'Lab Incharge' },
-    { value: 'admin', label: 'Admin' },
+    { value: 'operator',         label: 'Operator' },
+    { value: 'lab_incharge',     label: 'Lab Incharge' },
+    { value: 'quality_incharge', label: 'Quality Incharge' },
+    { value: 'admin',            label: 'Admin' },
   ];
 
   return (

@@ -18,9 +18,12 @@ const mapRecord = (row) => {
 class FinalProductRepository {
   async findAll(filters = {}) {
     let query = `
-      SELECT r.*, u.full_name as created_by_name
+      SELECT r.*,
+             u.full_name  AS created_by_name,
+             ab.full_name AS approved_by_name
       FROM final_product_storage_records r
-      LEFT JOIN users u ON r.created_by = u.id
+      LEFT JOIN users u  ON r.created_by  = u.id
+      LEFT JOIN users ab ON r.approved_by = ab.id
       WHERE 1=1
     `;
     const params = [];
@@ -45,6 +48,11 @@ class FinalProductRepository {
       params.push(filters.date_to);
     }
 
+    if (filters.status) {
+      query += ' AND r.status = ?';
+      params.push(filters.status);
+    }
+
     query += ' ORDER BY r.date DESC, r.shift ASC, r.created_at DESC';
 
     if (filters.limit) {
@@ -63,13 +71,26 @@ class FinalProductRepository {
 
   async findById(id) {
     const [rows] = await pool.query(
-      `SELECT r.*, u.full_name as created_by_name
+      `SELECT r.*,
+              u.full_name  AS created_by_name,
+              ab.full_name AS approved_by_name
        FROM final_product_storage_records r
-       LEFT JOIN users u ON r.created_by = u.id
+       LEFT JOIN users u  ON r.created_by  = u.id
+       LEFT JOIN users ab ON r.approved_by = ab.id
        WHERE r.id = ?`,
       [id]
     );
     return mapRecord(rows[0]);
+  }
+
+  async approve(id, { status, approved_by, approval_comment }) {
+    const [result] = await pool.query(
+      `UPDATE final_product_storage_records
+       SET status = ?, approved_by = ?, approved_at = NOW(), approval_comment = ?
+       WHERE id = ?`,
+      [status, approved_by, approval_comment || null, id]
+    );
+    return result.affectedRows;
   }
 
   async create(data) {
@@ -115,7 +136,7 @@ class FinalProductRepository {
       'milk_quantity_l', 'temp_celsius', 'flavour_taste', 'acidity_percent',
       'alcohol_result', 'fat_percent', 'clr', 'snf_percent',
       'efficiency_percent', 'protein_percent', 'electrolyte_condition',
-      'remark', 'chemist_name', 'quality_incharge_name'
+      'remark', 'chemist_name', 'quality_incharge_name',
     ];
 
     for (const field of updatable) {

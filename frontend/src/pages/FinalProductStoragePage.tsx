@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Plus, Save, Trash2, Eye, Edit2, RefreshCw, Download,
-  FlaskConical, Calendar, Clock
+  FlaskConical, Calendar, Clock, CheckCircle2, XCircle, ShieldCheck
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -13,10 +13,23 @@ import { Select } from '../components/ui/Select';
 import { finalProductService } from '../services/finalProduct.service';
 import type { FinalProductRecord, FinalProductFormData } from '../types';
 import { formatDate } from '../lib/utils';
+import { useAuthStore } from '../store/auth.store';
+
+// ─── Safe UUID generator (works on HTTP / non-secure origins) ───────────────
+const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
 
 // ─── Empty row factory ────────────────────────────────────────────────────────
 const emptyRow = (): Omit<FinalProductFormData, 'date' | 'shift' | 'chemist_name' | 'quality_incharge_name'> & { _id: string } => ({
-  _id: crypto.randomUUID(),
+  _id: generateId(),
   testing_time: '',
   tank_no: '',
   type_of_milk: 'cow',
@@ -103,8 +116,19 @@ export default function FinalProductStoragePage() {
   const today = new Date().toISOString().split('T')[0];
 
   // Filter state
-  const [filterDate, setFilterDate] = useState(today);
+  const [filterDate, setFilterDate] = useState('');
   const [filterShift, setFilterShift] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+
+  // Current user & permissions
+  const { user: currentUser } = useAuthStore();
+  const canApprove = currentUser?.role === 'admin' || currentUser?.role === 'lab_incharge' || currentUser?.role === 'quality_incharge';
+
+  // Approval modal state
+  const [approvalRecord, setApprovalRecord] = useState<FinalProductRecord | null>(null);
+  const [approvalAction, setApprovalAction] = useState<'approved' | 'rejected'>('approved');
+  const [approvalComment, setApprovalComment] = useState('');
+  const [approving, setApproving] = useState(false);
 
   // Form state (new-entry mode)
   const [formDate, setFormDate] = useState(today);
@@ -126,11 +150,12 @@ export default function FinalProductStoragePage() {
   const queryClient = useQueryClient();
 
   const { data: records, isLoading, refetch } = useQuery({
-    queryKey: ['finalProductRecords', filterDate, filterShift],
+    queryKey: ['finalProductRecords', filterDate, filterShift, filterStatus],
     queryFn: () =>
       finalProductService.getAll({
         ...(filterDate ? { date: filterDate } : {}),
         ...(filterShift !== 'all' ? { shift: filterShift } : {}),
+        ...(filterStatus !== 'all' ? { status: filterStatus } : {}),
       }),
   });
 
@@ -180,7 +205,7 @@ export default function FinalProductStoragePage() {
   const openEdit = (rec: FinalProductRecord) => {
     setEditRecord(rec);
     const { id, created_at, updated_at, created_by, created_by_name, date, shift, chemist_name, quality_incharge_name, ...rest } = rec as any;
-    setEditRows([{ _id: crypto.randomUUID(), ...rest }]);
+    setEditRows([{ _id: generateId(), ...rest }]);
   };
 
   const handleEditSave = async () => {
@@ -198,6 +223,28 @@ export default function FinalProductStoragePage() {
       toast.error(error.response?.data?.message || 'Update failed');
     } finally {
       setEditSaving(false);
+    }
+  };
+
+  // ── Approve / Reject ───────────────────────────────────────────────────────
+  const openApprovalModal = (rec: FinalProductRecord, action: 'approved' | 'rejected') => {
+    setApprovalRecord(rec);
+    setApprovalAction(action);
+    setApprovalComment('');
+  };
+
+  const handleApprove = async () => {
+    if (!approvalRecord) return;
+    setApproving(true);
+    try {
+      await finalProductService.approve(approvalRecord.id, approvalAction, approvalComment || undefined);
+      toast.success(`Record ${approvalAction === 'approved' ? 'approved ✅' : 'rejected ❌'} successfully`);
+      setApprovalRecord(null);
+      queryClient.invalidateQueries({ queryKey: ['finalProductRecords'] });
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Action failed');
+    } finally {
+      setApproving(false);
     }
   };
 
@@ -464,8 +511,22 @@ export default function FinalProductStoragePage() {
                   options={[{ value: 'all', label: 'All Shifts' }, ...shiftOptions]}
                 />
               </div>
+              <div className="flex-1 min-w-[180px]">
+                <Select
+                  id="filter-status"
+                  label="Filter by Status"
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  options={[
+                    { value: 'all',      label: 'All Status' },
+                    { value: 'pending',  label: '🟡 Pending' },
+                    { value: 'approved', label: '✅ Approved' },
+                    { value: 'rejected', label: '❌ Rejected' },
+                  ]}
+                />
+              </div>
               <div className="pb-0.5">
-                <Button variant="outline" onClick={() => { setFilterDate(''); setFilterShift('all'); }}>
+                <Button variant="outline" onClick={() => { setFilterDate(''); setFilterShift('all'); setFilterStatus('all'); }}>
                   Clear
                 </Button>
               </div>
@@ -525,6 +586,7 @@ export default function FinalProductStoragePage() {
                       <th className="py-3 px-4 text-left text-xs font-semibold text-text-secondary">Electrolyte</th>
                       <th className="py-3 px-4 text-left text-xs font-semibold text-text-secondary">Chemist</th>
                       <th className="py-3 px-4 text-left text-xs font-semibold text-text-secondary">Q. Incharge</th>
+                      <th className="py-3 px-4 text-left text-xs font-semibold text-text-secondary">Status</th>
                       <th className="py-3 px-4 text-left text-xs font-semibold text-text-secondary">Actions</th>
                     </tr>
                   </thead>
@@ -558,6 +620,22 @@ export default function FinalProductStoragePage() {
                         <td className="py-2.5 px-4 text-xs text-text-secondary">{rec.electrolyte_condition ?? '—'}</td>
                         <td className="py-2.5 px-4 text-xs text-text-secondary">{rec.chemist_name ?? '—'}</td>
                         <td className="py-2.5 px-4 text-xs text-text-secondary">{rec.quality_incharge_name ?? '—'}</td>
+                        {/* Status badge */}
+                        <td className="py-2.5 px-4">
+                          {rec.status === 'approved' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                              <CheckCircle2 className="w-3 h-3" /> Approved
+                            </span>
+                          ) : rec.status === 'rejected' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                              <XCircle className="w-3 h-3" /> Rejected
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
+                              <ShieldCheck className="w-3 h-3" /> Pending
+                            </span>
+                          )}
+                        </td>
                         <td className="py-2.5 px-4">
                           <div className="flex items-center gap-1">
                             <button
@@ -574,6 +652,24 @@ export default function FinalProductStoragePage() {
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
+                            {canApprove && rec.status !== 'approved' && (
+                              <button
+                                onClick={() => openApprovalModal(rec, 'approved')}
+                                className="p-1.5 rounded hover:bg-emerald-50 text-emerald-600 hover:text-emerald-700 transition-colors"
+                                title="Approve"
+                              >
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                            {canApprove && rec.status !== 'rejected' && (
+                              <button
+                                onClick={() => openApprovalModal(rec, 'rejected')}
+                                className="p-1.5 rounded hover:bg-red-50 text-red-500 hover:text-red-600 transition-colors"
+                                title="Reject"
+                              >
+                                <XCircle className="w-3.5 h-3.5" />
+                              </button>
+                            )}
                           </div>
                         </td>
                       </motion.tr>
@@ -635,6 +731,56 @@ export default function FinalProductStoragePage() {
               </div>
               <div className="flex justify-end mt-5">
                 <Button variant="outline" onClick={() => setViewRecord(null)}>Close</Button>
+              </div>
+            </Card>
+          </motion.div>
+        </div>
+      )}
+
+      {/* ════════════════════════════════════════════════════════════════ */}
+      {/* ── APPROVAL MODAL ───────────────────────────────────────────── */}
+      {/* ════════════════════════════════════════════════════════════════ */}
+      {approvalRecord && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md"
+          >
+            <Card>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className={`text-lg font-bold flex items-center gap-2 ${
+                  approvalAction === 'approved' ? 'text-emerald-700' : 'text-red-700'
+                }`}>
+                  {approvalAction === 'approved'
+                    ? <><CheckCircle2 className="w-5 h-5" /> Approve Record</>
+                    : <><XCircle className="w-5 h-5" /> Reject Record</>}
+                </h2>
+                <button onClick={() => setApprovalRecord(null)} className="p-2 rounded-lg hover:bg-secondary-100 text-text-secondary transition-colors">✕</button>
+              </div>
+              <p className="text-sm text-text-secondary mb-4">
+                Tank: <span className="font-semibold text-text-primary">{approvalRecord.tank_no}</span> &nbsp;|
+                Date: <span className="font-semibold text-text-primary">{formatDate(approvalRecord.date)}</span>
+              </p>
+              <div className="mb-5">
+                <label className="block text-sm font-medium text-text-secondary mb-1">Comment (optional)</label>
+                <textarea
+                  value={approvalComment}
+                  onChange={(e) => setApprovalComment(e.target.value)}
+                  rows={3}
+                  placeholder="Add a comment..."
+                  className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 resize-none"
+                />
+              </div>
+              <div className="flex gap-3 justify-end">
+                <Button variant="outline" onClick={() => setApprovalRecord(null)}>Cancel</Button>
+                <Button
+                  disabled={approving}
+                  onClick={handleApprove}
+                  className={approvalAction === 'approved' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'}
+                >
+                  {approving ? 'Processing...' : approvalAction === 'approved' ? '✅ Confirm Approve' : '❌ Confirm Reject'}
+                </Button>
               </div>
             </Card>
           </motion.div>
